@@ -28,7 +28,8 @@ export const Locations = {
 }
 
 export const MARKER = {
-    X: "seen",
-    "?": "suspected",
-    "-": "safe"
+    nil: "",
+    seen: "/",
+    suspected: "?",
+    safe: "X"
 }
