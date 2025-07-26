@@ -64,15 +64,16 @@ function InitScreen({ players, setPlayers, startGame }: InitScreenProps) {
 }
 
 export default function  App() {
+    // TODO: Add session storage using jotai state management
     const [players, setPlayers] = useState<string[]>([]);
     const [isInProgress, setIsInProgress] = useState(false);
 
     return (
-        <div>
-            {
-                !isInProgress ? <InitScreen players={players} setPlayers={setPlayers} startGame={() => setIsInProgress(true)} /> :
-                    <Sheet players={players} />
-            }
-        </div>
+        <div>{!isInProgress ?
+            <InitScreen players={players}
+                setPlayers={setPlayers}
+                startGame={() => setIsInProgress(true)} /> :
+            <Sheet players={players} />
+        }</div>
     )
 }
