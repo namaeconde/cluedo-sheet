@@ -85,10 +85,20 @@ body {
     align-items: center;
     margin-top: 12px;
     margin-bottom: 12px;
+    gap: 8px;
 }
 .clear--btn {
     border: none;
     border-radius: 10px;
     background-color: #42A5F5;
+    font-size: 16px;
+    color: white;
+}
+
+.restart--btn {
+    border: none;
+    border-radius: 10px;
+    background-color: #EF5350;
+    font-size: 16px;
     color: white;
 }

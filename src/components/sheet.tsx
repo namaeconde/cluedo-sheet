@@ -1,7 +1,13 @@
 import { Characters, Locations, MARKER, Weapons } from "../lib/types";
 import { Grid } from "./grid.component";
 import { useAtom } from "jotai";
-import { whatGridItemsAtoms, whereGridItemsAtoms, whoGridItemsAtoms } from "../lib/atoms";
+import {
+    isInProgressAtom,
+    playersAtom,
+    whatGridItemsAtoms,
+    whereGridItemsAtoms,
+    whoGridItemsAtoms
+} from "../lib/atoms";
 import { useEffect } from "react";
 
 interface SheetProps {
@@ -12,6 +18,8 @@ export const Sheet = ({ players }: SheetProps) => {
     const [whoGridItems, setWhoGridItems] = useAtom(whoGridItemsAtoms);
     const [whatGridItems, setWhatGridItems] = useAtom(whatGridItemsAtoms);
     const [whereGridItems, setWhereGridItems] = useAtom(whereGridItemsAtoms);
+    const [, setIsInProgress] = useAtom(isInProgressAtom);
+    const [, setPlayers] = useAtom(playersAtom);
 
     const initWhoGridItems: { [index: string]: string[] } = {};
     Object.values(Characters).map((key) => {
@@ -40,12 +48,26 @@ export const Sheet = ({ players }: SheetProps) => {
         if (sessionStorage.getItem('where-items') === null) {
             setWhereGridItems(initWhereGridItems);
         }
-    }, []);
+    }, [whoGridItems, whatGridItems, whereGridItems]);
 
     const handleClearClick = () => {
-        setWhoGridItems(initWhoGridItems);
-        setWhatGridItems(initWhatGridItems);
-        setWhereGridItems(initWhereGridItems);
+        setWhoGridItems({...initWhoGridItems});
+        setWhatGridItems({...initWhatGridItems});
+        setWhereGridItems({...initWhereGridItems});
+        window.scrollTo(0, 0);
+    }
+
+    const handleRestart = () => {
+        setIsInProgress(false);
+        setPlayers([]);
+        setWhoGridItems(null);
+        setWhatGridItems(null);
+        setWhereGridItems(null);
+        sessionStorage.removeItem('is-in-progress');
+        sessionStorage.removeItem('players');
+        sessionStorage.removeItem('who-items');
+        sessionStorage.removeItem('what-items');
+        sessionStorage.removeItem('where-items');
     }
 
     const PlayersSection = ({ players} : { players:string[] }) => {
@@ -53,12 +75,10 @@ export const Sheet = ({ players }: SheetProps) => {
             <div style={{ marginBottom: 0 }} className="grid">
                 <div className="grid-row">
                     <div style={{ display:"flex", gap: "12px" }}>
-                        <div className="grid-row--title" style={{ width: "160px" }}></div>
+                        <div className="grid-row--title"></div>
                         {players.map((val) => {
                             return <div style={{ width: "16px", height: "16px" }} key={val}>{val}</div>
                         })}
-                        <button aria-label="Add new player initial"
-                                className="add-player--btn ">+</button>
                     </div>
                 </div>
             </div>
@@ -93,6 +113,9 @@ export const Sheet = ({ players }: SheetProps) => {
                 <button className="clear--btn"
                         aria-label="Clear markers on sheet"
                         onClick={handleClearClick}>Clear</button>
+                <button className="restart--btn"
+                        aria-label="Restart entire sheet setup"
+                        onClick={handleRestart}>Restart</button>
             </div>
         </div>
     )
