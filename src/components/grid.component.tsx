@@ -3,7 +3,8 @@ import { MARKER } from "../lib/types";
 
 interface GridProps {
     title?: String,
-    items: { [index: string]: string[] }
+    items: { [index: string]: string[] },
+    onItemsUpdate: Function
 }
 
 /**
@@ -11,8 +12,9 @@ interface GridProps {
  *
  * @param title - title heading of the grid if provided
  * @param items - list of items in string to be displayed rows
+ * @param onItemsUpdate - function to call when grid items have been updated
  */
-export const Grid = ({ title, items }: GridProps) => {
+export const Grid = ({ title, items, onItemsUpdate }: GridProps) => {
     const [gridItems, setGridItems] = useState(items);
 
     const handleOnClick = (key: string, index: number) => {
@@ -23,7 +25,7 @@ export const Grid = ({ title, items }: GridProps) => {
             case MARKER.safe: gridItems[key][index] = MARKER.nil; break;
             default: gridItems[key][index] = MARKER.seen; break;
         }
-        setGridItems({...gridItems});
+        onItemsUpdate({...gridItems});
     }
 
     return (

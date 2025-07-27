@@ -39,6 +39,7 @@ body {
     height: 18px;
     line-height: 16px;
     padding: 0;
+    color: red;
 }
 
 .container {
@@ -64,4 +65,30 @@ body {
     border: 1px solid;
     border-radius: 10px;
     padding: 10px;
+}
+
+.add-player--btn {
+    border-radius: 100%;
+    border: none;
+    padding: 0;
+    width: 15px;
+    height: 15px;
+    text-align: center;
+    line-height: 13px;
+    background-color: #42A5F5;
+    color: white;
+}
+
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+.clear--btn {
+    border: none;
+    border-radius: 10px;
+    background-color: #42A5F5;
+    color: white;
 }
