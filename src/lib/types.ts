@@ -33,3 +33,11 @@ export const MARKER = {
     suspected: "?",
     safe: "X"
 }
+
+export const STORAGE_KEY = {
+    IS_IN_PROGRESS: 'is-in-progress',
+    PLAYERS: 'players',
+    WHO_ITEMS: 'who-items',
+    WHAT_ITEMS: 'what-items',
+    WHERE_ITEMS: 'where-items'
+}

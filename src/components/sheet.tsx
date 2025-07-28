@@ -1,4 +1,4 @@
-import { Characters, Locations, MARKER, Weapons } from "../lib/types";
+import { Characters, Locations, MARKER, STORAGE_KEY, Weapons } from "../lib/types";
 import { Grid } from "./grid.component";
 import { useAtom } from "jotai";
 import {
@@ -37,15 +37,15 @@ export const Sheet = ({ players }: SheetProps) => {
     });
 
     useEffect(() => {
-        if (sessionStorage.getItem('who-items') === null) {
+        if (sessionStorage.getItem(STORAGE_KEY.WHO_ITEMS) === null) {
             setWhoGridItems(initWhoGridItems);
         }
 
-        if (sessionStorage.getItem('what-items') === null) {
+        if (sessionStorage.getItem(STORAGE_KEY.WHAT_ITEMS) === null) {
             setWhatGridItems(initWhatGridItems);
         }
 
-        if (sessionStorage.getItem('where-items') === null) {
+        if (sessionStorage.getItem(STORAGE_KEY.WHERE_ITEMS) === null) {
             setWhereGridItems(initWhereGridItems);
         }
     }, [whoGridItems, whatGridItems, whereGridItems]);
@@ -63,11 +63,9 @@ export const Sheet = ({ players }: SheetProps) => {
         setWhoGridItems(null);
         setWhatGridItems(null);
         setWhereGridItems(null);
-        sessionStorage.removeItem('is-in-progress');
-        sessionStorage.removeItem('players');
-        sessionStorage.removeItem('who-items');
-        sessionStorage.removeItem('what-items');
-        sessionStorage.removeItem('where-items');
+        Object.values(STORAGE_KEY).map((k) => {
+            sessionStorage.removeItem(k);
+        })
     }
 
     const PlayersSection = ({ players} : { players:string[] }) => {
